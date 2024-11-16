@@ -8,5 +8,6 @@
 </head>
 <body>
 <%@ include file="header.html" %>
+<%@ include file="footer.html" %>
 </body>
 </html>
