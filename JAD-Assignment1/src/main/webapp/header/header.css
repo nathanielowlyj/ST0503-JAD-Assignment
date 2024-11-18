@@ -24,6 +24,12 @@ body, html {
 	  padding: 0 20px; 
 	  box-sizing: border-box; 
   }
+  
+  header h1 {
+  	position: absolute;
+    transform: translateX(-50%);
+	left: 50%;
+  }
 
   /* Hamburger Menu Styling */
   .menu-toggle {

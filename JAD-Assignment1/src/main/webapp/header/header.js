@@ -5,7 +5,7 @@ const userId = localStorage.getItem('user_id');
 
 if (userId) {
     userActions.innerHTML = `
-      	<a href="#">Profile</a>
+      	<a href="img/pfp.png">
       	<a href="#" id="logout">Logout</a>
     `;
     document.getElementById('logout').addEventListener('click', function() {
