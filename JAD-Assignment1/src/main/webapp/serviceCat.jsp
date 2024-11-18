@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%@ include file="header.html" %>
+<%@ include file="header/header.html" %>
 </body>
 </html>
