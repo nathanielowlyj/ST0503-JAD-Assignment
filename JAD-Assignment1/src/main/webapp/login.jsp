@@ -68,7 +68,7 @@
             position: absolute; 
             top: 17px; 
             left: 17px; 
-            color: #000000ee;
+            color: #ffffff;
             text-decoration: none;
             font-size: 12px;
             cursor: pointer;
@@ -84,7 +84,7 @@
         <a href="landing.jsp" class="back-button">&lt; Back</a> 
         <h2>Sign in</h2>
         <form action="LoginServlet" method="post">
-            <input type="text" name="username" class="input-field" placeholder="Username" required><br>
+            <input type="text" name="email" class="input-field" placeholder="E-mail" required><br>
             <input type="password" name="password" class="input-field" placeholder="Password" required><br>
             <button type="submit" class="login-button">Login</button>
             <a href="register.jsp" class="register-link">register</a>

@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.security.MessageDigest" %>
+<%@ page import="java.util.Base64" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,10 +83,77 @@
     </style>
 </head>
 <body>
+<%
+    String method = request.getMethod();
+    if ("POST".equalsIgnoreCase(method)) {
+        String dbURL = "jdbc:postgresql://ep-wild-feather-a1euu27g.ap-southeast-1.aws.neon.tech/cleaningServices?user=cleaningServices_owner&password=mh0zgxauP6HJ&sslmode=require";
+        String dbUser = "cleaningServices_owner";
+        String dbPassword = "mh0zgxauP6HJ";
+
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        boolean emailExists = false;
+
+        // Hash the password using SHA-256
+        String hashedPassword = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(password.getBytes("UTF-8"));
+            hashedPassword = Base64.getEncoder().encodeToString(hashBytes); // Base64 encoding
+        } catch (Exception e) {
+            out.println("<script>alert('Error hashing password. Please try again.');</script>");
+        }
+
+        if (hashedPassword != null) {
+            try {
+                Class.forName("org.postgresql.Driver");
+                try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
+                    // Check if email exists
+                    String checkEmailSQL = "SELECT * FROM users WHERE email = ?";
+                    try (PreparedStatement checkEmailStmt = connection.prepareStatement(checkEmailSQL)) {
+                        checkEmailStmt.setString(1, email);
+                        try (ResultSet rs = checkEmailStmt.executeQuery()) {
+                            if (rs.next()) {
+                                emailExists = true;
+                            }
+                        }
+                    }
+
+                    if (emailExists) {
+%>
+                        <script>
+                            alert("The specified email is already registered. Please use a different email.");
+                        </script>
+<%
+                    } else {
+                        // Insert user into the database
+                        String insertUserSQL = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+                        try (PreparedStatement insertUserStmt = connection.prepareStatement(insertUserSQL)) {
+                            insertUserStmt.setString(1, username);
+                            insertUserStmt.setString(2, email);
+                            insertUserStmt.setString(3, hashedPassword);
+                            insertUserStmt.executeUpdate();
+%>
+                        <script>
+                            alert("Registration successful! Redirecting to login.");
+                            window.location.href = "login.jsp";
+                        </script>
+<%
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                out.println("<div class='error'>An error occurred: " + e.getMessage() + "</div>");
+            }
+        }
+    }
+%>
     <div class="register-container">
         <a href="landing.jsp" class="back-button">&lt; Back</a> 
         <h2>Register</h2>
-        <form action="RegisterServlet" method="post">
+        <form action="register.jsp" method="post">
             <input type="text" name="username" class="input-field" placeholder="Username" required><br>
             <input type="email" name="email" class="input-field" placeholder="Email" required><br>
             <input type="password" name="password" class="input-field" placeholder="Password" required><br>
