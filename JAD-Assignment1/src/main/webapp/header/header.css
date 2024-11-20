@@ -25,11 +25,12 @@ body, html {
 	  box-sizing: border-box; 
   }
   
-  header h1 {
-  	position: absolute;
-    transform: translateX(-50%);
-	left: 50%;
-  }
+ header h1 {
+    display: absolute;
+    align-items: center; /* Centers the logo and text vertically */
+    font-size: 24px; /* Adjust font size as needed */
+    margin: 0; /* Remove default margin */
+}
 
   /* Hamburger Menu Styling */
   .menu-toggle {
