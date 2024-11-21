@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.security.MessageDigest" %>
+<%@ page import="java.util.Base64" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -80,10 +83,69 @@
     </style>
 </head>
 <body>
+<%
+    String method = request.getMethod();
+    if ("POST".equalsIgnoreCase(method)) {
+        String dbURL = "jdbc:postgresql://ep-wild-feather-a1euu27g.ap-southeast-1.aws.neon.tech/cleaningServices?user=cleaningServices_owner&password=mh0zgxauP6HJ&sslmode=require";
+        String dbUser = "cleaningServices_owner";
+        String dbPassword = "mh0zgxauP6HJ";
+
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        boolean isAuthenticated = false;
+        String userId = null;
+        String userRole = null;
+
+        try {
+            // Hash the provided password using SHA-256
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(password.getBytes("UTF-8"));
+            String hashedPassword = Base64.getEncoder().encodeToString(hashBytes);
+
+            // Connect to the database and verify the user
+            Class.forName("org.postgresql.Driver");
+            try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
+                String checkUserSQL = "SELECT id, role FROM users WHERE email = ? AND password = ?";
+                try (PreparedStatement checkUserStmt = connection.prepareStatement(checkUserSQL)) {
+                    checkUserStmt.setString(1, email);
+                    checkUserStmt.setString(2, hashedPassword);
+                    try (ResultSet rs = checkUserStmt.executeQuery()) {
+                        if (rs.next()) {
+                            isAuthenticated = true;
+                            userId = rs.getString("id");
+                            userRole = rs.getString("role");
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            out.println("<div class='error'>An error occurred: " + e.getMessage() + "</div>");
+        }
+
+        if (isAuthenticated) {
+            // Set session attributes for id and role
+            session.setAttribute("id", userId);
+            session.setAttribute("role", userRole);
+%>
+            <script>
+                alert("Login successful! Redirecting to home page.");
+                window.location.href = "landing.jsp";
+            </script>
+<%
+        } else {
+%>
+            <script>
+                alert("Invalid email or password. Please try again.");
+            </script>
+<%
+        }
+    }
+%>
     <div class="login-container">
         <a href="landing.jsp" class="back-button">&lt; Back</a> 
         <h2>Sign in</h2>
-        <form action="LoginServlet" method="post">
+        <form action="login.jsp" method="post">
             <input type="text" name="email" class="input-field" placeholder="E-mail" required><br>
             <input type="password" name="password" class="input-field" placeholder="Password" required><br>
             <button type="submit" class="login-button">Login</button>
