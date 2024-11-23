@@ -183,7 +183,7 @@
 </style>
 </head>
 <body>
-<%@ include file="header/header.html" %>
+<%@ include file="header/header.jsp" %>
 <div class="grid" style="margin-top: 40px;">
     <%
         String serviceId = request.getParameter("id");

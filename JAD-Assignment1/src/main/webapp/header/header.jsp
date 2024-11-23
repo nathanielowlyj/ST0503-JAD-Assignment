@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +35,23 @@
     <a href="#">Settings</a>
   </div>
 </div>
+<%
+    String userId = (String) session.getAttribute("id");
+    String userRole = (String) session.getAttribute("role");
 
+    // Set cookies with session data
+    if (userId != null) {
+        Cookie userIdCookie = new Cookie("userId", userId);
+        userIdCookie.setMaxAge(60 * 60 * 24); // Cookie expires in 1 day
+        response.addCookie(userIdCookie);
+    }
+
+    if (userRole != null) {
+        Cookie userRoleCookie = new Cookie("userRole", userRole);
+        userRoleCookie.setMaxAge(60 * 60 * 24);
+        response.addCookie(userRoleCookie);
+    }
+%>
 <script src="/JAD-Assignment1/header/header.js"></script>
 </body>
 </html>
