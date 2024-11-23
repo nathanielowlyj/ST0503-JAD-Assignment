@@ -111,7 +111,7 @@
                 Class.forName("org.postgresql.Driver");
                 try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
                     // Check if email exists
-                    String checkEmailSQL = "SELECT * FROM users WHERE email = ?";
+                    String checkEmailSQL = "SELECT 1 FROM users WHERE email = ?";
                     try (PreparedStatement checkEmailStmt = connection.prepareStatement(checkEmailSQL)) {
                         checkEmailStmt.setString(1, email);
                         try (ResultSet rs = checkEmailStmt.executeQuery()) {
@@ -158,7 +158,7 @@
             <input type="email" name="email" class="input-field" placeholder="Email" required><br>
             <input type="password" name="password" class="input-field" placeholder="Password" required><br>
             <button type="submit" class="register-button">Register</button>
-            <a href="login.jsp" class="login-link">login</a>
+            <a href="login.jsp" class="login-link">Login</a>
         </form>
     </div>
 </body>

@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
 body, html {
+	background-color: #4D637A;
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
@@ -125,14 +126,6 @@ body, html {
   }
   .navbar .settings a:hover {
     color: #1abc9c;
-  }
-
-  /* Main content area (adjust margin-top to avoid overlapping header) */
-  main {
-    margin-top: 60px;
-    padding: 20px;
-    transition: margin-left 0.5s;
-    color: #333;
   }
 
   /* Sidebar Expanded */

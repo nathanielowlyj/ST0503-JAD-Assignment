@@ -106,6 +106,7 @@
             // Connect to the database and verify the user
             Class.forName("org.postgresql.Driver");
             try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
+                // Verify the user
                 String checkUserSQL = "SELECT id, role FROM users WHERE email = ? AND password = ?";
                 try (PreparedStatement checkUserStmt = connection.prepareStatement(checkUserSQL)) {
                     checkUserStmt.setString(1, email);
@@ -115,6 +116,20 @@
                             isAuthenticated = true;
                             userId = rs.getString("id");
                             userRole = rs.getString("role");
+                        }
+                    }
+                }
+
+                // If authenticated, update last_login column
+                if (isAuthenticated) {
+                    String updateLastLoginSQL = "UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
+                    try (PreparedStatement updateLastLoginStmt = connection.prepareStatement(updateLastLoginSQL)) {
+                        updateLastLoginStmt.setString(1, userId);
+                        int rowsUpdated = updateLastLoginStmt.executeUpdate();
+                        if (rowsUpdated > 0) {
+                            System.out.println("Last login updated for user ID: " + userId);
+                        } else {
+                            System.out.println("Failed to update last login for user ID: " + userId);
                         }
                     }
                 }

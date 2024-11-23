@@ -50,7 +50,7 @@
 	    <%
 	        } else if ("user".equals(userRole)) {
 	    %>
-	            <a href='/JAD-Assignment1/serviceBooking.jsp'>Bookings</a>
+	            <a href='/JAD-Assignment1/serviceBooking.jsp'>Booking</a>
 	    <%
 	        }
 	    %>
