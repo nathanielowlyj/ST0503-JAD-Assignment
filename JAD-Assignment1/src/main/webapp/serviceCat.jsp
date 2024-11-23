@@ -97,7 +97,7 @@
 </style>
 </head>
 <body>
-<%@ include file="/header/header.html" %> 
+<%@ include file="header/header.jsp" %>
 
 <h1>Service Categories</h1>
 
