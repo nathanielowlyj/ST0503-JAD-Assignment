@@ -211,9 +211,9 @@
                 double price = resultSet.getDouble("price");
     %>
             <div class="card" style="background-image: url('<%= imagePath %>');">
-                <h3><%= serviceName %></h3>
-                <p>Price: $<%= price %></p>
-                <div class="hidden-description" style="display: none;"><%= description %></div>
+                <h3 id="serviceName"><%= serviceName %></h3>
+                <p id="price">Price: $<%= price %></p>
+                <div id="description" style="display: none;"><%= description %></div>
                 <div class="button-wrapper">
                     <form action="serviceDetails.jsp" method="GET">
                         <input type="hidden" name="id" value="<%= id %>">
@@ -254,12 +254,10 @@
 <script>
     // Function to show the popup
     function showPopup(serviceName, description, price) {
-        // Fill the popup with the specific data
         document.getElementById('popup-name').textContent = serviceName;
         document.getElementById('popup-description').textContent = description;
         document.getElementById('popup-price').textContent = price;
-
-        // Show the popup
+        document.getElementById('popup-service-id').value = serviceId;
         document.getElementById("popup").style.display = "flex";
     }
 
@@ -272,18 +270,16 @@
     document.querySelectorAll('.popup-button').forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
-            // Get the values from the specific card
-            const serviceName = button.closest('.card').querySelector('h3').textContent;
-            const description = button.closest('.card').querySelector('.hidden-description').textContent; 
-            const price = button.closest('.card').querySelector('p').textContent.split('$')[1];
-            
-            // Call showPopup function with values
-            showPopup(serviceName, description, price);
+    	    const serviceName = this.closest('.card').querySelector('.serviceName').textContent;
+        	const description = this.closest('.card').querySelector('.description').textContent; 
+        	const price = this.closest('.card').querySelector('.price').textContent.split('$')[1]; // Remove the '$' sign
+            const serviceId = this.closest('.card').querySelector('input[type="hidden"]').value;
+            showPopup(serviceName, description, price, serviceId);
         });
     });
 
     function bookService() {
-        // Placeholder for booking logic
+    	const serviceId = document.getElementById('popup-service-id').value;
         alert('Service booked!');
     }
 </script>

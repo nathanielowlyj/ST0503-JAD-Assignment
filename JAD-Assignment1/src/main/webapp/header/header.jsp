@@ -63,9 +63,9 @@
     String action = request.getParameter("action");
     if ("logout".equals(action)) {
         if (session != null) {
-            session.invalidate(); // Invalidate session
+            session.invalidate(); 
         }
-        response.sendRedirect("/JAD-Assignment1/landing.jsp"); // Redirect to landing page
+        response.sendRedirect("/JAD-Assignment1/landing.jsp"); 
     }
 %>
 
