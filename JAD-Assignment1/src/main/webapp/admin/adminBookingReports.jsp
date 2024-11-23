@@ -4,10 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Admin Services</title>
+<title>Admin Booking</title>
 </head>
 <body>
-<%@ include file="header/header.jsp" %>
-<%@ include file="footer.html" %>
+<%@ include file="../header/header.jsp" %>
+	
+<%@ include file="../footer.html" %>
 </body>
 </html>
