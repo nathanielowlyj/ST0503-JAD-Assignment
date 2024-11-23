@@ -12,6 +12,7 @@
         gap: 20px;
         justify-content: center;
         margin: 20px;
+        margin-top: 0px;
     }
 
     .card {
@@ -159,6 +160,7 @@
         }
     %>
 </div>
+<%@ include file="footer.html" %>
 
 </body>
 </html>

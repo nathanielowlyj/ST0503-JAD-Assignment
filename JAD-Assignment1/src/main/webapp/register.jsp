@@ -71,7 +71,7 @@
             position: absolute; 
             top: 17px; 
             left: 17px; 
-            color: #000000ee;
+            color: #ffffff;
             text-decoration: none;
             font-size: 12px;
             cursor: pointer;

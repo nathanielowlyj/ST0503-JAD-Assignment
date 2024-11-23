@@ -184,7 +184,7 @@
 </head>
 <body>
 <%@ include file="header/header.jsp" %>
-<div class="grid" style="margin-top: 40px;">
+<div class="grid" style="margin-top: 80px;">
     <%
         String serviceId = request.getParameter("id");
         String dbURL = "jdbc:postgresql://ep-wild-feather-a1euu27g.ap-southeast-1.aws.neon.tech/cleaningServices?sslmode=require";
@@ -287,5 +287,7 @@
         alert('Service booked!');
     }
 </script>
+
+<%@ include file="footer.html" %>
 </body>
 </html>
