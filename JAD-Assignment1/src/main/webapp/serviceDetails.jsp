@@ -272,7 +272,7 @@
 
     function bookService() {
     	const serviceId = document.getElementById('popup-service-id').value;
-        window.location.href = "serviceBooking.jsp";
+        window.location.href = "customer/serviceBooking.jsp";
     }
 </script>
 
