@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%@ include file="sessionHandlingAdmin.jsp" %>
 <!DOCTYPE html>
@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Category</title>
-	<style>
+    <style>
         body {
             display: flex;
             align-items: center;
@@ -81,7 +81,7 @@
 </head>
 <body>
 <%
-    boolean isSubmitted = request.getParameter("submit") != null;
+    boolean isSubmitted = "POST".equalsIgnoreCase(request.getMethod());
     String message = "";
 
     String dbURL = "jdbc:postgresql://ep-wild-feather-a1euu27g.ap-southeast-1.aws.neon.tech/cleaningServices?sslmode=require";
@@ -92,28 +92,32 @@
         String categoryName = request.getParameter("name");
         String categoryDescription = request.getParameter("description");
 
-        try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
-             PreparedStatement pstmt = connection.prepareStatement(
-                "INSERT INTO service_category (name, description) VALUES (?, ?)")) {
-            Class.forName("org.postgresql.Driver");
-            pstmt.setString(1, categoryName);
-            pstmt.setString(2, categoryDescription);
+        if (categoryName == null || categoryName.trim().isEmpty() || categoryDescription == null || categoryDescription.trim().isEmpty()) {
+            message = "Please fill out all fields.";
+        } else {
+            try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
+                 PreparedStatement pstmt = connection.prepareStatement(
+                    "INSERT INTO service_category (name, description) VALUES (?, ?)")) {
+                Class.forName("org.postgresql.Driver");
+                pstmt.setString(1, categoryName.trim());
+                pstmt.setString(2, categoryDescription.trim());
 
-            int rowsAffected = pstmt.executeUpdate();
-            if (rowsAffected > 0) {
-                message = "Category created successfully.";
-            } else {
-                message = "Failed to create the category. Please try again.";
+                int rowsAffected = pstmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    message = "Category created successfully.";
+                } else {
+                    message = "Failed to create the category. Please try again.";
+                }
+            } catch (Exception e) {
+                application.log("Error creating category: " + e.getMessage());
+                message = "An error occurred while creating the category.";
             }
-        } catch (Exception e) {
-            application.log("Error creating category: " + e.getMessage());
-            message = "An error occurred while creating the category.";
         }
     }
 %>
 
 <div class="form-container">
-    <% if (!isSubmitted || message.contains("Failed") || message.contains("error")) { %>
+    <% if (!isSubmitted || message.contains("Failed") || message.contains("error") || message.contains("Please fill out")) { %>
         <h1>Create Category</h1>
         <% if (!message.isEmpty()) { %>
             <p class="message" style="color: red;"><%= message %></p>
@@ -125,6 +129,7 @@
             <label for="description">Description</label>
             <textarea id="description" name="description" required></textarea>
 
+            <input type="hidden" name="submit" value="true">
             <button type="submit" class="add-btn">Create Category</button>
             <button type="button" class="close-btn" onclick="window.location.href='adminServices.jsp';">Close</button>
         </form>

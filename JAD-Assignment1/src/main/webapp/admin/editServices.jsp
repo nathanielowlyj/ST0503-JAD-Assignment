@@ -38,7 +38,7 @@
             font-weight: bold;
         }
 
-        .form-container input, .form-container textarea {
+        .form-container select, .form-container input, .form-container textarea, .form-container button {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -47,10 +47,6 @@
         }
 
         .form-container button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
             background-color: #007bff;
             color: white;
             font-size: 16px;
@@ -77,6 +73,7 @@
     String serviceName = "";
     String serviceDescription = "";
     double servicePrice = 0.0;
+    int currentCategoryId = 0;
 
     String dbURL = "jdbc:postgresql://ep-wild-feather-a1euu27g.ap-southeast-1.aws.neon.tech/cleaningServices?sslmode=require";
     String dbUser = "cleaningServices_owner";
@@ -85,7 +82,7 @@
     if (!isSubmitted) {
         // Fetch current service details
         try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
-            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM service WHERE id = ?")) {
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM service WHERE id = ?")) {
             Class.forName("org.postgresql.Driver");
             stmt.setInt(1, serviceId);
             try (ResultSet resultSet = stmt.executeQuery()) {
@@ -93,6 +90,7 @@
                     serviceName = resultSet.getString("name");
                     serviceDescription = resultSet.getString("description");
                     servicePrice = resultSet.getDouble("price");
+                    currentCategoryId = resultSet.getInt("category_id");
                 } else {
                     message = "Service not found.";
                 }
@@ -106,15 +104,17 @@
         serviceName = request.getParameter("name");
         serviceDescription = request.getParameter("description");
         servicePrice = Double.parseDouble(request.getParameter("price"));
+        int newCategoryId = Integer.parseInt(request.getParameter("category_id"));
 
         try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
              PreparedStatement pstmt = connection.prepareStatement(
-                "UPDATE service SET name = ?, description = ?, price = ? WHERE id = ?")) {
+                "UPDATE service SET name = ?, description = ?, price = ?, category_id = ? WHERE id = ?")) {
             Class.forName("org.postgresql.Driver");
             pstmt.setString(1, serviceName);
             pstmt.setString(2, serviceDescription);
             pstmt.setDouble(3, servicePrice);
-            pstmt.setInt(4, serviceId);
+            pstmt.setInt(4, newCategoryId);
+            pstmt.setInt(5, serviceId);
 
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
@@ -145,6 +145,30 @@
 
             <label for="price">Price</label>
             <input type="number" step="0.01" id="price" name="price" value="<%= servicePrice %>" required>
+
+            <label for="category_id">Category</label>
+            <select id="category_id" name="category_id" required>
+                <%
+                    try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
+                         PreparedStatement stmt = connection.prepareStatement("SELECT * FROM service_category");
+                         ResultSet categories = stmt.executeQuery()) {
+                        while (categories.next()) {
+                            int categoryId = categories.getInt("id");
+                            String categoryName = categories.getString("name");
+                %>
+                            <option value="<%= categoryId %>" <%= (categoryId == currentCategoryId ? "selected" : "") %>>
+                                <%= categoryName %>
+                            </option>
+                <%
+                        }
+                    } catch (Exception e) {
+                        application.log("Error fetching categories: " + e.getMessage());
+                %>
+                    <option value="" disabled>Error loading categories</option>
+                <%
+                    }
+                %>
+            </select>
 
             <input type="hidden" name="id" value="<%= serviceId %>">
             <input type="hidden" name="submit" value="true">

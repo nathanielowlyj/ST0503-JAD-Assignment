@@ -70,8 +70,8 @@
     }
     
     .card button {
-        width: 100%; /* Full width of the wrapper */
-        height: 100%; /* Full height of the wrapper */
+        width: 100%; 
+        height: 100%;
         padding: 10px 30px;
         border: none;
         border-radius: 5px;
@@ -211,20 +211,19 @@
                 double price = resultSet.getDouble("price");
     %>
             <div class="card" style="background-image: url('<%= imagePath %>');">
-                <h3 id="serviceName"><%= serviceName %></h3>
-                <p id="price">Price: $<%= price %></p>
-                <div id="description" style="display: none;"><%= description %></div>
-                <div class="button-wrapper">
-                    <form action="serviceDetails.jsp" method="GET">
-                        <input type="hidden" name="id" value="<%= id %>">
-                        <button type="submit" class="popup-button">View Details</button>
-                    </form>
-                </div>
-            </div>
+			    <h3 class="serviceName"><%= serviceName %></h3>
+			    <p class="price">Price: $<%= price %></p>
+			    <div class="description" style="display: none;"><%= description %></div>
+			    <div class="button-wrapper">
+			        <form action="serviceDetails.jsp" method="GET">
+			            <input type="hidden" name="id" value="<%= id %>">
+			            <button type="submit" class="popup-button">View Details</button>
+			        </form>
+			    </div>
+			</div>
     <%
             }
         } catch (Exception e) {
-            // Display user-friendly error and log server-side issues
             application.log("Error fetching services: " + e.getMessage());
     %>
         <div class="error">
@@ -232,7 +231,6 @@
         </div>
     <%
         } finally {
-            // Ensure database resources are released
             if (resultSet != null) try { resultSet.close(); } catch (SQLException ignore) {}
             if (preparedStatement != null) try { preparedStatement.close(); } catch (SQLException ignore) {}
             if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
@@ -247,13 +245,13 @@
         <h3 id="popup-name">Service Name</h3>
         <p id="popup-description">Description of the service goes here.</p>
         <p>Price: $<span id="popup-price"></span></p>
+        <input type="hidden" id="popup-service-id" value="">
         <button class="booking-button" onclick="bookService()">Book Now</button>
     </div>
 </div>
 
 <script>
-    // Function to show the popup
-    function showPopup(serviceName, description, price) {
+    function showPopup(serviceName, description, price, serviceId) {
         document.getElementById('popup-name').textContent = serviceName;
         document.getElementById('popup-description').textContent = description;
         document.getElementById('popup-price').textContent = price;
@@ -261,19 +259,18 @@
         document.getElementById("popup").style.display = "flex";
     }
 
-    // Function to close the popup
     function closePopup() {
-        document.getElementById("popup").style.display = "none"; // Hide popup
+        document.getElementById("popup").style.display = "none"; 
     }
 
-    // Example of triggering the popup from a button
     document.querySelectorAll('.popup-button').forEach(button => {
         button.addEventListener('click', function(event) {
             event.preventDefault();
-    	    const serviceName = this.closest('.card').querySelector('.serviceName').textContent;
-        	const description = this.closest('.card').querySelector('.description').textContent; 
-        	const price = this.closest('.card').querySelector('.price').textContent.split('$')[1]; // Remove the '$' sign
-            const serviceId = this.closest('.card').querySelector('input[type="hidden"]').value;
+            const card = this.closest('.card');
+            const serviceName = card.querySelector('.serviceName').textContent;
+            const description = card.querySelector('.description').textContent;
+            const price = card.querySelector('.price').textContent.split('$')[1];
+            const serviceId = card.querySelector('form input[name="id"]');
             showPopup(serviceName, description, price, serviceId);
         });
     });

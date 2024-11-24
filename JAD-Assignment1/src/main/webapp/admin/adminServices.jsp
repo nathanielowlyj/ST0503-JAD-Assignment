@@ -10,7 +10,7 @@
 	    body {
 	        font-family: Arial, sans-serif;
 	        text-align: center;
-	        background-color: #f0f2f5;
+	        background-color: #4d637a;
 	    }
 
 	    .table-container {
@@ -142,7 +142,7 @@
         connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
 
         // Query for services with pagination
-        String serviceSql = "SELECT * FROM service LIMIT " + pageSize + " OFFSET " + serviceOffset;
+        String serviceSql = "SELECT * FROM service ORDER BY id ASC LIMIT " + pageSize + " OFFSET " + serviceOffset;
         serviceStmt = connection.createStatement();
         serviceResultSet = serviceStmt.executeQuery(serviceSql);
 %>
@@ -153,6 +153,7 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Category ID</th> 
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
@@ -163,15 +164,17 @@
             <%
                 while (serviceResultSet.next()) {
                     int id = serviceResultSet.getInt("id");
+                    int categoryId = serviceResultSet.getInt("category_id"); 
                     String name = serviceResultSet.getString("name");
                     String description = serviceResultSet.getString("description");
                     double price = serviceResultSet.getDouble("price");
             %>
             <tr>
                 <td><%= id %></td>
+                <td><%= categoryId %></td> 
                 <td><%= name %></td>
                 <td><%= description %></td>
-                <td><%= price %></td>
+                <td>$<%= price %></td>
                 <td class="action-buttons">
                     <form action="editServices.jsp" method="GET" style="display:inline;">
                         <input type="hidden" name="id" value="<%= id %>">
@@ -210,7 +213,7 @@
 </div>
 
 <%
-    String categorySql = "SELECT * FROM service_category LIMIT " + pageSize + " OFFSET " + categoryOffset;
+    String categorySql = "SELECT * FROM service_category ORDER BY id ASC LIMIT " + pageSize + " OFFSET " + categoryOffset;
     categoryStmt = connection.createStatement();
     categoryResultSet = categoryStmt.executeQuery(categorySql);
 %>
