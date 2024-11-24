@@ -2,6 +2,12 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.security.MessageDigest" %>
 <%@ page import="java.util.Base64" %>
+<%
+if (session.getAttribute("id") != null) {
+    response.sendRedirect("landing.jsp");
+    return;
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
