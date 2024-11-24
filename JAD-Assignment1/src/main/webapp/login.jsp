@@ -124,7 +124,7 @@
                 if (isAuthenticated) {
                     String updateLastLoginSQL = "UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
                     try (PreparedStatement updateLastLoginStmt = connection.prepareStatement(updateLastLoginSQL)) {
-                        updateLastLoginStmt.setString(1, userId);
+                        updateLastLoginStmt.setInt(1, Integer.parseInt(userId));
                         int rowsUpdated = updateLastLoginStmt.executeUpdate();
                         if (rowsUpdated > 0) {
                             System.out.println("Last login updated for user ID: " + userId);

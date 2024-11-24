@@ -47,6 +47,7 @@
 	    %>
 	            <a href='/JAD-Assignment1/admin/adminServices.jsp'>Services (Admin)</a>
 	            <a href='/JAD-Assignment1/admin/adminBookingReports.jsp'>Booking Reports</a>
+	            <a href='/JAD-Assignment1/admin/registeredCustomers.jsp'>Customer Records</a>
 	    <%
 	        } else if ("user".equals(userRole)) {
 	    %>
