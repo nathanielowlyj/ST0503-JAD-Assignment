@@ -11,7 +11,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh; /* Full screen height */
+            height: 100vh; 
             margin: 0;
             font-family: Arial, sans-serif;
             background-color: #4d637a;

@@ -89,7 +89,6 @@
             background-color: #6c757d;
         }
 
-        /* Pop-up */
         .pop-up {
             display: none;
             position: fixed;
@@ -161,8 +160,6 @@
     try {
         Class.forName("org.postgresql.Driver");
         connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
-
-        // Query to fetch booking details with pagination
         String sql = "SELECT bl.id AS booking_id, " +
                      "u.id AS user_id, " +
                      "u.name AS user_name, " +
@@ -182,7 +179,6 @@
         stmt.setInt(2, offset);
         resultSet = stmt.executeQuery();
 
-        // Query to count total records
         countStmt = connection.prepareStatement("SELECT COUNT(*) AS total FROM booking_list");
         countResultSet = countStmt.executeQuery();
         countResultSet.next();
@@ -227,7 +223,6 @@
                     <td>$<%= total %></td>
                     <td><button onclick="showDetails(<%= bookingId %>)">Details</button></td>
                 </tr>
-                <!-- Pop-up for Booking Details -->
                 <div id="pop-up-<%= bookingId %>" class="pop-up">
                     <div class="pop-up-content">
                         <span class="close" onclick="closeDetails(<%= bookingId %>)">&times;</span>

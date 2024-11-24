@@ -80,7 +80,6 @@
     String dbPassword = "mh0zgxauP6HJ";
 
     if (!isSubmitted) {
-        // Fetch current service details
         try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
              PreparedStatement stmt = connection.prepareStatement("SELECT * FROM service WHERE id = ?")) {
             Class.forName("org.postgresql.Driver");
@@ -100,7 +99,6 @@
             message = "An error occurred while fetching the service.";
         }
     } else {
-        // Update service details
         serviceName = request.getParameter("name");
         serviceDescription = request.getParameter("description");
         servicePrice = Double.parseDouble(request.getParameter("price"));

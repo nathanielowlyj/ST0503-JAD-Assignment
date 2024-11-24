@@ -8,7 +8,7 @@
 <style>
     .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusts column width based on screen size */
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 20px;
         justify-content: center;
         margin: 20px;
@@ -16,15 +16,15 @@
 
     .card {
         position: relative;
-        width: 100%; /* Full width of grid column */
-        padding-bottom: 133.33%; /* Enforces 3:4 aspect ratio */
+        width: 100%; 
+        padding-bottom: 133.33%; 
         background-color: #f9f9f9;
         border: 1px solid #ccc;
         border-radius: 5px;
         box-sizing: border-box;
         overflow: hidden;
-        background-size: cover; /* Ensures background image fills card */
-        background-position: center; /* Centers background image */
+        background-size: cover;
+        background-position: center; 
     }
     
     .card::before {
@@ -34,7 +34,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+        background: rgba(0, 0, 0, 0.5); 
         z-index: 0;
     }
     
@@ -42,7 +42,7 @@
         position: absolute;
         z-index: 1;
         color: white;
-        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7); /* Enhances text readability */
+        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7); 
         text-align: center;
         width: 100%;
     }
@@ -65,8 +65,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 100px; /* Fixed width for the wrapper */
-        height: 40px; /* Fixed height for the wrapper */
+        width: 100px; 
+        height: 40px; 
     }
     
     .card button {
@@ -112,35 +112,32 @@
         transform: scale(1.1);
     }
     
-    /* Dark background overlay for popup */
     .pop-up-container {
-        display: none; /* Hidden by default */
+        display: none; 
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
+        background-color: rgba(0, 0, 0, 0.7); 
         z-index: 1000;
         justify-content: center;
         align-items: center;
     }
     
-    /* Dark background overlay for popup */
     .pop-up-container {
-        display: none; /* Hidden by default */
+        display: none; 
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
+        background-color: rgba(0, 0, 0, 0.7); 
         z-index: 1000;
         justify-content: center;
         align-items: center;
     }
 
-    /* Popup content style */
     .pop-up-content {
         background-color: white;
         padding: 20px;
@@ -148,11 +145,10 @@
         text-align: center;
         width: 50%;
         box-sizing: border-box;
-        position: relative; /* Ensures content is relative for positioning inside */
-        z-index: 1010; /* Ensure this content appears above the background overlay */
+        position: relative; 
+        z-index: 1010; 
     }
 
-    /* Close button style inside the popup */
     .pop-up-close {
         position: absolute;
         top: 10px;
@@ -160,10 +156,9 @@
         font-size: 24px;
         color: #000;
         cursor: pointer;
-        z-index: 1020; /* Ensure it's above other content */
+        z-index: 1020; 
     }
 
-    /* Booking button */
     .booking-button {
         padding: 10px 20px;
         border: none;

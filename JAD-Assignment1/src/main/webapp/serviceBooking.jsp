@@ -71,7 +71,6 @@ if (session.getAttribute("id") == null) {
                 "cleaningServices_owner",
                 "mh0zgxauP6HJ");
 
-            // Insert into `booking_list`
             String insertBookingListSQL = "INSERT INTO booking_list (user_id) VALUES (?) RETURNING id";
             stmt = conn.prepareStatement(insertBookingListSQL);
             stmt.setInt(1, Integer.parseInt(userId));
@@ -79,7 +78,6 @@ if (session.getAttribute("id") == null) {
             rs.next();
             int bookingId = rs.getInt(1);
 
-            // Insert into `booking_details`
             String insertBookingDetailsSQL = "INSERT INTO booking_details (booking_id, service_id, booking_date, quantity, price) " +
                                              "VALUES (?, ?, ?, ?, (SELECT price FROM service WHERE id = ?))";
             stmt = conn.prepareStatement(insertBookingDetailsSQL);
@@ -146,14 +144,14 @@ if (session.getAttribute("id") == null) {
         font-weight: bold;
         margin-right: 10px;
         text-align: left;
-        flex: 1; /* Labels take equal space */
+        flex: 1; 
     }
     .row input,
     .row select {
-        flex: 2; /* Inputs take up more space */
+        flex: 2; 
         padding: 5px;
         font-size: 14px;
-        margin-left: 10px; /* Ensure space between label and input */
+        margin-left: 10px; 
     }
     .checkout {
         margin: 20px;
@@ -250,8 +248,6 @@ if (session.getAttribute("id") == null) {
 
         async function handleCheckout() {
             if (!validateForm()) return;
-
-            const userId = 1; // Replace with dynamic user ID
             const serviceId = servicesDropdown.value;
             const date = dateInput.value;
             const time = timeInput.value;
@@ -259,7 +255,6 @@ if (session.getAttribute("id") == null) {
 
             const url = 'serviceBooking.jsp?action=addBooking';
             const params = new URLSearchParams({
-                userId,
                 serviceId,
                 date,
                 time,

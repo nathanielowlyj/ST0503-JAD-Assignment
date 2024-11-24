@@ -94,8 +94,6 @@
         double servicePrice = Double.parseDouble(request.getParameter("price"));
         int categoryId = Integer.parseInt(request.getParameter("category_id"));
         boolean categoryExists = false;
-
-        // Check if the category ID exists
         try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
              PreparedStatement categoryCheckStmt = connection.prepareStatement(
                 "SELECT COUNT(*) AS count FROM service_category WHERE id = ?")) {

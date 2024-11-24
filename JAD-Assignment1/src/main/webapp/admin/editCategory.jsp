@@ -82,7 +82,6 @@
     String dbPassword = "mh0zgxauP6HJ";
 
     if (!isSubmitted) {
-        // Fetch current category details
         try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM service_category WHERE id = ?")) {
             Class.forName("org.postgresql.Driver");
@@ -100,7 +99,6 @@
             message = "An error occurred while fetching the category.";
         }
     } else {
-        // Update category details
         categoryName = request.getParameter("name");
         categoryDescription = request.getParameter("description");
 

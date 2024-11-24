@@ -123,7 +123,7 @@
 <%
     int servicePage = request.getParameter("servicePage") != null ? Integer.parseInt(request.getParameter("servicePage")) : 1;
     int categoryPage = request.getParameter("categoryPage") != null ? Integer.parseInt(request.getParameter("categoryPage")) : 1;
-    int pageSize = 5; // Number of rows per page, can be changed
+    int pageSize = 5; 
     int serviceOffset = (servicePage - 1) * pageSize;
     int categoryOffset = (categoryPage - 1) * pageSize;
 
@@ -140,8 +140,6 @@
     try {
         Class.forName("org.postgresql.Driver");
         connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
-
-        // Query for services with pagination
         String serviceSql = "SELECT * FROM service ORDER BY id ASC LIMIT " + pageSize + " OFFSET " + serviceOffset;
         serviceStmt = connection.createStatement();
         serviceResultSet = serviceStmt.executeQuery(serviceSql);

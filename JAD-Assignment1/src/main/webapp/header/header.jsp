@@ -15,10 +15,8 @@
     <span></span><span></span><span></span>
 </div>
 <h1><img src="/JAD-Assignment1/img/logo.png" alt="Logo" style="width: 30px; height: 30px; padding-right: 10px; vertical-align: middle;">Bright Space</h1>
-<!-- User Actions: Login/Register or Profile -->
 <div class="user-actions" id="userActions">
 <%
-    // Check if user is logged in via session
     String userId = (String) session.getAttribute("id");
     String userRole = (String) session.getAttribute("role");
         

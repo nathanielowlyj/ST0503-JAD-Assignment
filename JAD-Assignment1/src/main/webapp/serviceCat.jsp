@@ -24,8 +24,8 @@
         border-radius: 5px;
         box-sizing: border-box;
         overflow: hidden;
-        background-size: cover; /* Ensures background image fills card */
-        background-position: center; /* Centers background image */
+        background-size: cover; 
+        background-position: center; 
     }
     
 	.card::before {
@@ -35,7 +35,7 @@
 	    left: 0;
 	    width: 100%;
 	    height: 100%;
-	    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+	    background: rgba(0, 0, 0, 0.5); 
 	    z-index: 0;
 	}
 	
@@ -43,7 +43,7 @@
         position: absolute;
         z-index: 1;
         color: white;
-        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7); /* Enhances text readability */
+        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.7); 
         text-align: center;
         width: 100%;
     }
@@ -66,13 +66,13 @@
 	    display: flex;
 	    justify-content: center;
 	    align-items: center;
-	    width: 100px; /* Fixed width for the wrapper */
-	    height: 40px; /* Fixed height for the wrapper */
+	    width: 100px; 
+	    height: 40px; 
 	}
 	
 	.card button {
-	    width: 100%; /* Full width of the wrapper */
-	    height: 100%; /* Full height of the wrapper */
+	    width: 100%; 
+	    height: 100%; 
 	    padding: 10px 30px;
 	    border: none;
 	    border-radius: 5px;
@@ -104,7 +104,6 @@
 
 <div class="grid">
     <%
-        // Database connection details for PostgreSQL
         String dbURL = "jdbc:postgresql://ep-wild-feather-a1euu27g.ap-southeast-1.aws.neon.tech/cleaningServices?sslmode=require";
         String dbUser = "cleaningServices_owner";
         String dbPassword = "mh0zgxauP6HJ";
@@ -114,18 +113,11 @@
         ResultSet resultSet = null;
 
         try {
-            // Load the PostgreSQL driver
             Class.forName("org.postgresql.Driver");
-
-            // Establish the connection
             connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
-
-            // Query to retrieve service categories
             String sql = "SELECT * FROM service_category";
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-
-            // Dynamically generate cards for each service category
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String categoryName = resultSet.getString("name");
@@ -145,7 +137,6 @@
     <%
             }
         } catch (Exception e) {
-            // Display user-friendly error and log server-side issues
             application.log("Error fetching service categories: " + e.getMessage());
     %>
         <div class="error">
@@ -153,7 +144,6 @@
         </div>
     <%
         } finally {
-            // Ensure database resources are released
             if (resultSet != null) try { resultSet.close(); } catch (SQLException ignore) {}
             if (statement != null) try { statement.close(); } catch (SQLException ignore) {}
             if (connection != null) try { connection.close(); } catch (SQLException ignore) {}

@@ -8,7 +8,6 @@ body, html {
     box-sizing: border-box;
   }
 
-  /* Header Styling */
   header {
       position: fixed;
 	  top: 0;
@@ -28,12 +27,11 @@ body, html {
   
  header h1 {
     display: absolute;
-    align-items: center; /* Centers the logo and text vertically */
-    font-size: 24px; /* Adjust font size as needed */
-    margin: 0; /* Remove default margin */
+    align-items: center; 
+    font-size: 24px; 
+    margin: 0; 
 }
 
-  /* Hamburger Menu Styling */
   .menu-toggle {
     display: flex;
     flex-direction: column;
@@ -49,7 +47,6 @@ body, html {
     transition: all 0.3s ease;
   }
 
-  /* User Actions: Login/Register or Profile */
   .user-actions {
       display: flex;
       align-items: center;
@@ -57,7 +54,6 @@ body, html {
       white-space: nowrap; 
   }
 
-  /* User Actions Links */
   .user-actions a {
       text-decoration: none;
       color: #ecf0f1;
@@ -74,7 +70,6 @@ body, html {
       border-color: #1abc9c;
   }
 
-  /* Navbar Styling */
   .navbar {
     position: fixed;
     top: 0;
@@ -94,7 +89,6 @@ body, html {
     padding: 70px 20px 20px; 
   }
 
-  /* Navbar Links */
   .navbar a {
     padding: 15px 0;
     padding-left: 20px;
@@ -112,7 +106,6 @@ body, html {
     transform-origin: left;
   }
 
-  /* Settings Link */
   .navbar .settings {
     margin: 20px;
     padding-top: 10px;
@@ -128,7 +121,6 @@ body, html {
     color: #1abc9c;
   }
 
-  /* Sidebar Expanded */
   .navbar.active {
     width: 250px;
   }

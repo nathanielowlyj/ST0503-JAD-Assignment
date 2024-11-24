@@ -31,10 +31,10 @@
         }
 
         table th, table td {
-            padding: 15px; /* Increased padding for better readability */
+            padding: 15px; 
             text-align: left;
             color: white;
-            border: 1px solid #495057; /* Slightly darker border */
+            border: 1px solid #495057; 
         }
 
         table th {
@@ -60,7 +60,7 @@
             cursor: pointer;
             font-size: 14px;
             color: white;
-            background-color: #dc3545; /* Red for Ban button */
+            background-color: #dc3545; 
         }
 
         button:hover {

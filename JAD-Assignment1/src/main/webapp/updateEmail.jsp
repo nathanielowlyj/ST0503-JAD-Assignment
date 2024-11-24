@@ -72,13 +72,11 @@ if ("POST".equalsIgnoreCase(request.getMethod())) {
     String dbPassword = "mh0zgxauP6HJ";
 
     try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
-        // Check if the new email already exists
         String checkEmailQuery = "SELECT COUNT(*) FROM users WHERE email = ?";
         try (PreparedStatement checkEmailStmt = connection.prepareStatement(checkEmailQuery)) {
             checkEmailStmt.setString(1, newEmail);
             try (ResultSet resultSet = checkEmailStmt.executeQuery()) {
                 if (resultSet.next() && resultSet.getInt(1) > 0) {
-                    // Email already exists
 %>
 <script>
     alert("The email is already in use. Please try another email.");
@@ -89,8 +87,6 @@ if ("POST".equalsIgnoreCase(request.getMethod())) {
                 }
             }
         }
-
-        // Update the email if it doesn't exist
         String updateEmailQuery = "UPDATE users SET email = ? WHERE id = ?";
         try (PreparedStatement updateEmailStmt = connection.prepareStatement(updateEmailQuery)) {
             updateEmailStmt.setString(1, newEmail);
@@ -98,7 +94,6 @@ if ("POST".equalsIgnoreCase(request.getMethod())) {
             int rowsAffected = updateEmailStmt.executeUpdate();
 
             if (rowsAffected > 0) {
-                // Redirect to profile.jsp after successful update
                 response.sendRedirect("profile.jsp");
             } else {
 %>

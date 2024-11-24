@@ -74,20 +74,15 @@ if ("POST".equalsIgnoreCase(request.getMethod())) {
     String dbPassword = "mh0zgxauP6HJ";
 
     try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
-        // Verify the current password
         String getPasswordQuery = "SELECT password FROM users WHERE id = ?";
         try (PreparedStatement getPasswordStmt = connection.prepareStatement(getPasswordQuery)) {
             getPasswordStmt.setInt(1, Integer.parseInt(uId));
             try (ResultSet resultSet = getPasswordStmt.executeQuery()) {
                 if (resultSet.next()) {
                     String storedHashedPassword = resultSet.getString("password");
-
-                    // Hash the provided current password
                     MessageDigest digest = MessageDigest.getInstance("SHA-256");
                     byte[] hashBytes = digest.digest(currentPassword.getBytes("UTF-8"));
                     String hashedCurrentPassword = Base64.getEncoder().encodeToString(hashBytes);
-
-                    // Check if the hashed password matches
                     if (!storedHashedPassword.equals(hashedCurrentPassword)) {
 %>
 <script>

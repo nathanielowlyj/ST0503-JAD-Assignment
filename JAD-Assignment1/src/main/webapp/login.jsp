@@ -104,12 +104,9 @@ if (session.getAttribute("id") != null) {
         String userRole = null;
 
         try {
-            // Hash the provided password using SHA-256
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hashBytes = digest.digest(password.getBytes("UTF-8"));
             String hashedPassword = Base64.getEncoder().encodeToString(hashBytes);
-
-            // Connect to the database and verify the user
             Class.forName("org.postgresql.Driver");
             try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
                 // Verify the user
@@ -126,7 +123,6 @@ if (session.getAttribute("id") != null) {
                     }
                 }
 
-                // If authenticated, update last_login column
                 if (isAuthenticated) {
                     String updateLastLoginSQL = "UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
                     try (PreparedStatement updateLastLoginStmt = connection.prepareStatement(updateLastLoginSQL)) {
@@ -145,7 +141,6 @@ if (session.getAttribute("id") != null) {
         }
 
         if (isAuthenticated) {
-            // Set session attributes for id and role
             session.setAttribute("id", userId);
             session.setAttribute("role", userRole);
 %>

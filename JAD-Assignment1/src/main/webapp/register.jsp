@@ -95,14 +95,10 @@ if (session.getAttribute("id") != null) {
         String dbURL = "jdbc:postgresql://ep-wild-feather-a1euu27g.ap-southeast-1.aws.neon.tech/cleaningServices?user=cleaningServices_owner&password=mh0zgxauP6HJ&sslmode=require";
         String dbUser = "cleaningServices_owner";
         String dbPassword = "mh0zgxauP6HJ";
-
         String username = request.getParameter("username");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
         boolean emailExists = false;
-
-        // Hash the password using SHA-256
         String hashedPassword = null;
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -116,7 +112,6 @@ if (session.getAttribute("id") != null) {
             try {
                 Class.forName("org.postgresql.Driver");
                 try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
-                    // Check if email exists
                     String checkEmailSQL = "SELECT 1 FROM users WHERE email = ?";
                     try (PreparedStatement checkEmailStmt = connection.prepareStatement(checkEmailSQL)) {
                         checkEmailStmt.setString(1, email);
@@ -134,7 +129,6 @@ if (session.getAttribute("id") != null) {
                         </script>
 <%
                     } else {
-                        // Insert user into the database
                         String insertUserSQL = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
                         try (PreparedStatement insertUserStmt = connection.prepareStatement(insertUserSQL)) {
                             insertUserStmt.setString(1, username);
