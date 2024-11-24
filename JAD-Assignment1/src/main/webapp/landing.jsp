@@ -120,7 +120,7 @@
         <div class="hero-text">
             <h1>Welcome to BrightSpace</h1>
             <p>Discover the best cleaning services for your home and office. Book today for a spotless tomorrow!</p>
-            <button>Book Now</button>
+            <button onclick="window.location.href='customer/serviceBooking.jsp'">Book Now</button>
         </div>
         <img src="img/landing.jpg" alt="Cleaning Service" id="landingImg">
     </section>
