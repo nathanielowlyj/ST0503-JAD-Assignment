@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Service</title>
-	<style>
+    <style>
         body {
             display: flex;
             align-items: center;
@@ -115,7 +115,6 @@
         if (!categoryExists) {
             message = "The specified Category ID does not exist. Please check and try again.";
         } else {
-            // Insert the service if the category exists
             try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword);
                  PreparedStatement pstmt = connection.prepareStatement(
                     "INSERT INTO service (name, description, price, category_id) VALUES (?, ?, ?, ?)")) {
@@ -158,6 +157,7 @@
             <label for="category_id">Category ID</label>
             <input type="number" id="category_id" name="category_id" required>
 
+            <input type="hidden" name="submit" value="true">
             <button type="submit" class="add-btn">Create Service</button>
             <button type="button" class="close-btn" onclick="window.location.href='adminServices.jsp';">Close</button>
         </form>
