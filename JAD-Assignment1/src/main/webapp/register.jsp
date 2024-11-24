@@ -137,7 +137,6 @@
                             insertUserStmt.executeUpdate();
 %>
                         <script>
-                            alert("Registration successful! Redirecting to login.");
                             window.location.href = "login.jsp";
                         </script>
 <%

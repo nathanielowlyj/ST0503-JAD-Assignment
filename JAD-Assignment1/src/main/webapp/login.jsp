@@ -144,7 +144,6 @@
             session.setAttribute("role", userRole);
 %>
             <script>
-                alert("Login successful! Redirecting to home page.");
                 window.location.href = "landing.jsp";
             </script>
 <%
