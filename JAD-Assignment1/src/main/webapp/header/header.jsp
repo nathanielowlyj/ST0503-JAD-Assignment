@@ -22,7 +22,7 @@
         
     if (userId != null && userRole != null) {
 %>
-        <a href="/JAD-Assignment1/profile.jsp">Profile</a>
+        <a href="/JAD-Assignment1/customer/profile.jsp">Profile</a>
         <a href="?action=logout" id="logout">Logout</a>
 <%
     } else {
@@ -49,7 +49,8 @@
 	    <%
 	        } else if ("user".equals(userRole)) {
 	    %>
-	            <a href='/JAD-Assignment1/serviceBooking.jsp'>Booking</a>
+	            <a href='/JAD-Assignment1/customer/serviceBooking.jsp'>Booking</a>
+	            <a href='/JAD-Assignment1/customer/customerFeedback.jsp'>Review</a>
 	    <%
 	        }
 	    %>

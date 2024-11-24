@@ -272,7 +272,7 @@
 
     function bookService() {
     	const serviceId = document.getElementById('popup-service-id').value;
-        alert('Service booked!');
+        window.location.href = "serviceBooking.jsp";
     }
 </script>
 

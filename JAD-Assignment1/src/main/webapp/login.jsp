@@ -109,7 +109,6 @@ if (session.getAttribute("id") != null) {
             String hashedPassword = Base64.getEncoder().encodeToString(hashBytes);
             Class.forName("org.postgresql.Driver");
             try (Connection connection = DriverManager.getConnection(dbURL, dbUser, dbPassword)) {
-                // Verify the user
                 String checkUserSQL = "SELECT id, role FROM users WHERE email = ? AND password = ?";
                 try (PreparedStatement checkUserStmt = connection.prepareStatement(checkUserSQL)) {
                     checkUserStmt.setString(1, email);

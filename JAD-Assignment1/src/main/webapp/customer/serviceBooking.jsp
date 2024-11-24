@@ -1,14 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="java.sql.*" %>
+<%@ include file="sessionHandlingCustomer.jsp" %> 
 <%
-if (session.getAttribute("id") == null) {
-    response.sendRedirect("landing.jsp");
-}	
-%>
-<%
-	if (session.getAttribute("id") == null) {
-		response.sendRedirect("landing.jsp");
-	}
     if ("fetchServices".equals(request.getParameter("action"))) {
         String categoryId = request.getParameter("categoryId");
         application.log("Received categoryId: " + categoryId);
@@ -268,7 +261,7 @@ if (session.getAttribute("id") == null) {
                 });
 
                 alert('Service booked successfully!');
-                window.location.href = 'landing.jsp';
+                window.location.href = '../landing.jsp';
                
             } catch (error) {
                 console.error('Error during checkout:', error);
@@ -303,7 +296,7 @@ if (session.getAttribute("id") == null) {
 </script>
 </head>
 <body>
-<%@ include file="header/header.jsp" %>
+<%@ include file="../header/header.jsp" %>
     <div class="container">
         <div class="details">
             <% 
@@ -367,7 +360,7 @@ if (session.getAttribute("id") == null) {
             <button class="button">Checkout</button>
         </div>
     </div>
-<%@ include file="footer.html" %>
+<%@ include file="../footer.html" %>
 </body>
 </html>
 	
