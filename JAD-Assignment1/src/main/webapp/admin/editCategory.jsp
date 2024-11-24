@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%@ include file="sessionHandlingAdmin.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #4d637a;
         }
 
         .form-container {
